@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Repose_Record.Properties {
+namespace Repose_Record_Test.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Repose_Record.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Repose_Record.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Repose_Record_Test.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -77,9 +77,32 @@ namespace Repose_Record.Properties {
         ///[1518-05-24 00:56] wakes up
         ///[151 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Input {
+        internal static string InputFile {
             get {
-                return ResourceManager.GetString("Input", resourceCulture);
+                return ResourceManager.GetString("InputFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [1518-11-01 00:00] Guard #10 begins shift
+        ///[1518-11-01 00:05] falls asleep
+        ///[1518-11-01 00:25] wakes up
+        ///[1518-11-01 00:30] falls asleep
+        ///[1518-11-01 00:55] wakes up
+        ///[1518-11-01 23:58] Guard #99 begins shift
+        ///[1518-11-02 00:40] falls asleep
+        ///[1518-11-02 00:50] wakes up
+        ///[1518-11-03 00:05] Guard #10 begins shift
+        ///[1518-11-03 00:24] falls asleep
+        ///[1518-11-03 00:29] wakes up
+        ///[1518-11-04 00:02] Guard #99 begins shift
+        ///[1518-11-04 00:36] falls asleep
+        ///[1518-11-04 00:46] wakes up
+        ///[1518-11-05 00:03] Guard #99 b [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TestInput {
+            get {
+                return ResourceManager.GetString("TestInput", resourceCulture);
             }
         }
     }

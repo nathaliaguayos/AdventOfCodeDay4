@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repose_Record
 {
@@ -11,9 +7,13 @@ namespace Repose_Record
         static void Main(string[] args)
         {
             String[] guardsRecords = Properties.Resources.Input.Split('\n');
-            //FindTheMostSleepyheadGuard findTheMostSleepyheadGuard = new FindTheMostSleepyheadGuard();
+            //String[] guardsRecords = Properties.Resources.TestPart1.Split('\n');
             GuardRecordsProcessor guardRecordsProcessor = new GuardRecordsProcessor();
-            guardRecordsProcessor.FindTheMostSleepyheadGuard(guardsRecords);
+
+            Console.WriteLine("Part 1\n"+guardRecordsProcessor.FindTheMostSleepyheadGuard(guardsRecords));
+
+            Console.WriteLine("\nPart 2\n" + guardRecordsProcessor.FindTheMostSleepyheadGuardInTheSameMinute(guardsRecords));
+            Console.Read();
         }
     }
 }

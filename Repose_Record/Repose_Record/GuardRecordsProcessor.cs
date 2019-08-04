@@ -7,21 +7,55 @@ using System.Threading.Tasks;
 
 namespace Repose_Record
 {
-    class GuardRecordsProcessor
+    public class GuardRecordsProcessor
     {
-        public void FindTheMostSleepyheadGuard(string[] guardsRecords)
+        //Strategy 1
+        public int FindTheMostSleepyheadGuard(string[] guardsRecords)
         {
-            var guardRecordsOrdered= OrderRecordsByDate(guardsRecords);
+            //var guardRecordsOrdered= OrderRecordsByDate(guardsRecords);
+            //var getRecordsPerGuard = GetRecordsPerGuard(guardRecordsOrdered);
+            //var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
+
+            //foreach (var currentRecord in getRecordsPerGuard)
+            //{
+            //    guardSleepDetails.Add(currentRecord.guardId,currentRecord.GetGuardSleepInformation());
+            //}
+
+            var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
+            guardSleepDetails = GetGuardSleepDetails(guardsRecords);
+            var maxTimeNap = guardSleepDetails.Values.Max(minute => minute.TotalMinutesAsleep);
+            var mostLazyGuard = guardSleepDetails.First(minute => minute.Value.TotalMinutesAsleep == maxTimeNap);
+
+            return mostLazyGuard.Key * mostLazyGuard.Value.MinuteMostCommonlyAsleep;
+        }
+        
+        //Strategy 2
+        public int FindTheMostSleepyheadGuardInTheSameMinute(string[] guardsRecords)
+        {
+            var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
+            guardSleepDetails = GetGuardSleepDetails(guardsRecords);
+
+            var timesCommonMinuteSleptIn = guardSleepDetails.Max(minute => minute.Value.TimesCommonMinuteSleptIn);
+            var SleepyheadGuard =
+                guardSleepDetails.First(minute => minute.Value.TimesCommonMinuteSleptIn == timesCommonMinuteSleptIn);
+            var maxMinuteOfNap = SleepyheadGuard.Value.MinuteMostCommonlyAsleep;
+
+            return SleepyheadGuard.Key * maxMinuteOfNap;
+        }
+
+        protected Dictionary<int, GuardSleepInformation> GetGuardSleepDetails(string[] guardsRecords)
+        {
+            var guardRecordsOrdered = OrderRecordsByDate(guardsRecords);
             var getRecordsPerGuard = GetRecordsPerGuard(guardRecordsOrdered);
-            var guardSleepDetails = new Dictionary<int, GuardSleepingDetails>();
+            var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
 
             foreach (var currentRecord in getRecordsPerGuard)
             {
-                guardSleepDetails.add
+                guardSleepDetails.Add(currentRecord.guardId, currentRecord.GetGuardSleepInformation());
             }
-          
-        }
 
+            return guardSleepDetails;
+        }
         private IDictionary<DateTime, string> OrderRecordsByDate(string[] guardsRecords)
         {
             var guardsRecordsOrderedDictionary = new Dictionary<DateTime, string>();
@@ -74,7 +108,7 @@ namespace Repose_Record
                     }
 
                     //save the status
-                    currentGuard.guardLogger.Add
+                    currentGuard.GuardLogger.Add
                     (
                         new GuardLogger()
                         {
@@ -87,7 +121,7 @@ namespace Repose_Record
                 //when a guard falls asleep
                 if (currentRecord.Value.Contains("falls"))
                 {
-                    currentGuard.guardLogger.Add
+                    currentGuard.GuardLogger.Add
                     (
                         new GuardLogger()
                         {
@@ -100,7 +134,7 @@ namespace Repose_Record
                 //when a guard wakes up
                 if (currentRecord.Value.Contains("wakes"))
                 {
-                    currentGuard.guardLogger.Add
+                    currentGuard.GuardLogger.Add
                     (
                         new GuardLogger()
                         {
@@ -113,6 +147,8 @@ namespace Repose_Record
             }
             return guardRecordsMonitoringList;
         }
+
+
     }
 
 
@@ -132,21 +168,5 @@ namespace Repose_Record
         Begins_Shift,
         AwakesUp,
         FallsAsleep
-    }
-
-    public struct GuardSleepingDetails
-    {
-        /// <summary>
-        /// The total number of minutes asleep for this guard.
-        /// </summary>
-        public int TotalMinutesAsleep { get; set; }
-        /// <summary>
-        /// The minute that most commonly has this guard sleeping.
-        /// </summary>
-        public int MinuteMostCommonlyAsleep { get; set; }
-        /// <summary>
-        /// The amount of times a guard was sleeping in the most commonly slept minute
-        /// </summary>
-        public int TimesCommonMinuteSleptIn { get; set; }
     }
 }
