@@ -2,18 +2,21 @@
 
 namespace Repose_Record
 {
+    /// <summary>
+    /// Author: Nathali Aguayo
+    /// </summary>
     public class GuardSleepInformation
     {
         /// <summary>
-        /// The total number of minutes asleep for this guard.
+        /// This is the total minutes that the guard sleeps 
         /// </summary>
         public int TotalMinutesAsleep { get; set; }
         /// <summary>
-        /// The minute that most commonly has this guard sleeping.
+        /// This stored the minute in which the guard is commonly sleeping 
         /// </summary>
         public int MinuteMostCommonlyAsleep { get; set; }
         /// <summary>
-        /// The amount of times a guard was sleeping in the most commonly slept minute
+        /// Count the times in which the guard is sleeping in the most commonly slept minute
         /// </summary>
         public int TimesCommonMinuteSleptIn { get; set; }
     }

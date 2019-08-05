@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace Repose_Record
 {
+    /// <summary>
+    /// Author: Nathali Aguayo
+    /// </summary>
     public class GuardRecordsProcessor
     {
-        //Strategy 1
+        /// <summary>
+        /// Strategy 1: Find the guard that has the most minutes asleep. What minute does that guard spend asleep the most? 
+        /// </summary>
+        /// <param name="guardsRecords"></param>
+        /// <returns></returns>
         public int FindTheMostSleepyheadGuard(string[] guardsRecords)
         {
-            //var guardRecordsOrdered= OrderRecordsByDate(guardsRecords);
-            //var getRecordsPerGuard = GetRecordsPerGuard(guardRecordsOrdered);
-            //var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
-
-            //foreach (var currentRecord in getRecordsPerGuard)
-            //{
-            //    guardSleepDetails.Add(currentRecord.guardId,currentRecord.GetGuardSleepInformation());
-            //}
-
             var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
             guardSleepDetails = GetGuardSleepDetails(guardsRecords);
             var maxTimeNap = guardSleepDetails.Values.Max(minute => minute.TotalMinutesAsleep);
@@ -28,8 +26,12 @@ namespace Repose_Record
 
             return mostLazyGuard.Key * mostLazyGuard.Value.MinuteMostCommonlyAsleep;
         }
-        
-        //Strategy 2
+
+        /// <summary>
+        /// Strategy 2: Of all guards, which guard is most frequently asleep on the same minute?
+        /// </summary>
+        /// <param name="guardsRecords"></param>
+        /// <returns></returns>
         public int FindTheMostSleepyheadGuardInTheSameMinute(string[] guardsRecords)
         {
             var guardSleepDetails = new Dictionary<int, GuardSleepInformation>();
@@ -43,6 +45,11 @@ namespace Repose_Record
             return SleepyheadGuard.Key * maxMinuteOfNap;
         }
 
+       /// <summary>
+       /// Description: This is the method that configure the Guard Records (Input) to be processed   
+       /// </summary>
+       /// <param name="guardsRecords"></param>
+       /// <returns></returns>
         protected Dictionary<int, GuardSleepInformation> GetGuardSleepDetails(string[] guardsRecords)
         {
             var guardRecordsOrdered = OrderRecordsByDate(guardsRecords);
@@ -56,6 +63,12 @@ namespace Repose_Record
 
             return guardSleepDetails;
         }
+
+       /// <summary>
+       /// Description: This method sort the Guard Records Dictionary by date
+       /// </summary>
+       /// <param name="guardsRecords"></param>
+       /// <returns></returns>
         private IDictionary<DateTime, string> OrderRecordsByDate(string[] guardsRecords)
         {
             var guardsRecordsOrderedDictionary = new Dictionary<DateTime, string>();
@@ -77,12 +90,16 @@ namespace Repose_Record
                 ToDictionary(logRecord => logRecord.Key, logRecord => logRecord.Value);
         }
 
+       /// <summary>
+       /// Description:This method separate the records per guard and return a list with those records organized. 
+       /// </summary>
+       /// <param name="guardRecordsOrdered"></param>
+       /// <returns></returns>
         private List<GuardRecordsMonitoring> GetRecordsPerGuard(IDictionary<DateTime, string> guardRecordsOrdered)
         {
             List<GuardRecordsMonitoring> guardRecordsMonitoringList = new List<GuardRecordsMonitoring>();
             var guardIdRegex = new Regex(@"(?<guardId>\d+)");
-
-            //GuardRecordsMonitoring currentGuard = null;
+            
             GuardRecordsMonitoring currentGuard = null;
             foreach (var currentRecord in guardRecordsOrdered)
             {
@@ -147,22 +164,18 @@ namespace Repose_Record
             }
             return guardRecordsMonitoringList;
         }
-
-
     }
-
-
-    struct GuardInformation
-    {
-        public int guardId { get; set; }
-        public List<GuardLogger> guardLogger { get; set; }
-
-    }
+    /// <summary>
+    /// Description: Struct that is used to process the guard entries.
+    /// </summary>
     public struct GuardLogger
     {
         public GuardStatus guardStatus { get; set; }
         public DateTime recordTime { get; set; }
     }
+    /// <summary>
+    /// Description: Enum that contains the status of the guards.
+    /// </summary>
     public enum GuardStatus
     {
         Begins_Shift,

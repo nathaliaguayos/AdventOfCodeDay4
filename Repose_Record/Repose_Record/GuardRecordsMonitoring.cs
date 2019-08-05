@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace Repose_Record
 {
+    /// <summary>
+    /// Author: Nathali Aguayo
+    /// </summary>
     class GuardRecordsMonitoring
     {
         public int guardId { get; set; }
         public List<GuardLogger> GuardLogger { get; set; } = new List<GuardLogger>();
 
+        /// <summary>
+        /// Description: This method generates and returns an object that contains all the sleep habits of the guard.
+        /// </summary>
+        /// <returns></returns>
         public GuardSleepInformation GetGuardSleepInformation()
         {
             DateTime takeNap =new DateTime();
@@ -31,7 +38,7 @@ namespace Repose_Record
                         break;
                 }
             }
-            var maxTimesMinuteSlept = minutesInHourDictionary.Values.Max();
+            var maxTimesMinuteSlept = minutesInHourDictionary.Values.Max(); 
             var mostAsleepMinute = maxTimesMinuteSlept;
 
             return new GuardSleepInformation()
@@ -43,8 +50,7 @@ namespace Repose_Record
         }
 
         /// <summary>
-        /// Keyed on the minute,
-        /// valued on the number of times minute is slept in by a specific guard
+        /// Description: This method initialized the dictionary with the 60 minutes that an hour contains. 
         /// </summary>
         /// <returns></returns>
         private Dictionary<int, int> FillMinutesInHourDictionary()
@@ -59,7 +65,12 @@ namespace Repose_Record
 
             return minutesInHourSleepTracking;
         }
-
+        /// <summary>
+        /// Description: This method is in charge of log the minutes spent in the nap. 
+        /// </summary>
+        /// <param name="takeNap"></param>
+        /// <param name="finishNap"></param>
+        /// <param name="minutesInHourDictionary"></param>
         private void GetTimeSpentSleeping(DateTime takeNap, DateTime finishNap, ref Dictionary<int, int> minutesInHourDictionary)
         {
             int startMinute = takeNap.Minute;

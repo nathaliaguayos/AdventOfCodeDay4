@@ -7,7 +7,6 @@ namespace Repose_Record
         static void Main(string[] args)
         {
             String[] guardsRecords = Properties.Resources.Input.Split('\n');
-            //String[] guardsRecords = Properties.Resources.TestPart1.Split('\n');
             GuardRecordsProcessor guardRecordsProcessor = new GuardRecordsProcessor();
 
             Console.WriteLine("Part 1\n"+guardRecordsProcessor.FindTheMostSleepyheadGuard(guardsRecords));
